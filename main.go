@@ -6,17 +6,24 @@ import (
 	"passwordGO/files"
 )
 
-func newPassword() *account.Password {
-	return &account.Password{}
+func newPassword() *account.NewPassword {
+	return &account.NewPassword{}
 }
 
 func main() {
-	files.ReadFile()
+	CreatePassword()
+}
+
+func CreatePassword() {
 	lenPass := promptData()
 	myPass := newPassword()
-	password := myPass.GeneratePassword(lenPass)
+	myPass.GeneratePassword(lenPass)
 	myPass.OutputData()
-	files.WriteFile(password, "password.txt")
+	file, err := myPass.ToBytes()
+	if err != nil {
+		fmt.Println(err)
+	}
+	files.WriteFile(file, "data.json")
 }
 
 func promptData() int {

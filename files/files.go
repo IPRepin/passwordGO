@@ -14,13 +14,13 @@ func ReadFile() {
 	fmt.Println(string(data))
 }
 
-func WriteFile(pass string, nameFile string) {
+func WriteFile(pass []byte, nameFile string) {
 	file, err := os.Create(nameFile)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer file.Close()
-	_, err = file.WriteString(pass)
+	_, err = file.Write(pass)
 	if err != nil {
 		fmt.Println(err)
 		return
