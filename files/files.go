@@ -6,7 +6,12 @@ import (
 )
 
 func ReadFile() {
-	return
+	data, err := os.ReadFile("password.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(string(data))
 }
 
 func WriteFile(pass string, nameFile string) {
@@ -14,12 +19,11 @@ func WriteFile(pass string, nameFile string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer file.Close()
 	_, err = file.WriteString(pass)
 	if err != nil {
-		file.Close()
 		fmt.Println(err)
 		return
 	}
 	fmt.Println("File created")
-	file.Close()
 }

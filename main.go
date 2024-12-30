@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"passwordGO/account"
+	"passwordGO/files"
 )
 
 func newPassword() *account.Password {
@@ -10,10 +11,12 @@ func newPassword() *account.Password {
 }
 
 func main() {
+	files.ReadFile()
 	lenPass := promptData()
 	myPass := newPassword()
-	myPass.GeneratePassword(lenPass)
+	password := myPass.GeneratePassword(lenPass)
 	myPass.OutputData()
+	files.WriteFile(password, "password.txt")
 }
 
 func promptData() int {

@@ -14,11 +14,12 @@ func (pass *Password) OutputData() {
 	//fmt.Printf("%s\n", pass.password)
 }
 
-func (pass *Password) GeneratePassword(num int) {
+func (pass *Password) GeneratePassword(num int) string {
 	simbols := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	result := make([]rune, num)
 	for i := range result {
 		result[i] = simbols[rand.Intn(len(simbols))]
 	}
 	pass.password = string(result)
+	return pass.password
 }
