@@ -1,29 +1,40 @@
 package files
 
 import (
-	"fmt"
 	"os"
+	"passwordGO/output"
+
+	"github.com/fatih/color"
 )
 
-func ReadFile() {
-	data, err := os.ReadFile("password.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(data))
+type JsonDb struct {
+	filename string
 }
 
-func WriteFile(pass []byte, nameFile string) {
-	file, err := os.Create(nameFile)
+func NewJsonDb(name string) *JsonDb {
+	return &JsonDb{
+		filename: name,
+	}
+}
+
+func (db *JsonDb) Read() ([]byte, error) {
+	data, err := os.ReadFile(db.filename)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
+	}
+	return data, nil
+}
+
+func (db *JsonDb) Write(content []byte) {
+	file, err := os.Create(db.filename)
+	if err != nil {
+		output.PrintError(err)
 	}
 	defer file.Close()
-	_, err = file.Write(pass)
+	_, err = file.Write(content)
 	if err != nil {
-		fmt.Println(err)
+		output.PrintError(err)
 		return
 	}
-	fmt.Println("File created")
+	color.Green("Запись успешна")
 }
